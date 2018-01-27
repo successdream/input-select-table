@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			
+			*{
+				margin: 0;
+				padding: 0;
+				border:0 none;
+			}
+			.big-box{
+				width: 300px;
+				height: 333px;
+				position: relative;
+				margin-top: 20px;
+			}
+			#inp{
+				width: 300px;
+				height: 30px;
+				border:1px solid #ccc;
+				text-align: center;
+			}
+			.box{
+				width: 300px;
+				height: 300px;
+				/*background-color: pink;*/
+				position: absolute;
+				left:0px;
+				top:32px;
+				border:1px solid #ccc;
+				border-top:0;
+				
+				
+			}
+			.hide-show{
+				display: none;
+			}
+			#theTable{
+			
+				width: 100%;
+			}
+			#theTable tr,#theTable th{
+				/*border-bottom:1px solid #ccc;*/
+				
+				
+			}
+			#theTable tr td{
+				width: 100%;
+				/*border-bottom: 1px solid #ccc;*/
+				/*text-align: center;*/
+				height: 30px;
+			}
+			.expand a{
+				background-repeat:no-repeat;
+				text-decoration:none;
+				display: inline-block;
+				width: 17px;
+				height: 17px;
+			}
+			.icon-mark-expand{
+				background-image: url("../img/collapse.png ");
+			}
+			.icon-mark-close{
+				background-image: url("../img/expand.png");
+			}
+			.select-color{
+				background-color:#3385ff;
+			}
+		</style>
+		<script src="../plugin/jquery-1.9.1/jquery-1.9.1.min.js"></script>
+		<script src="../plugin/treeTable/js/jquery.treetable.js"></script>
+		
+	</head>
+	<body>
+		<div class="big-box">
+			<input id="inp" type="text" />
+			<div class="box ">
+					<table id="theTable" class="tree_table ">
+						<tr data-tt-id="1" class="select-color">
+							<td>西溪银座</td>
+						</tr>
+						<tr data-tt-id="1-1" data-tt-parent-id="1">
+							<td>北门小路</td>
+						</tr>
+						<tr data-tt-id="1-2" data-tt-parent-id="1-1">
+							<td>西门弘德路</td>
+						</tr>
+						<tr data-tt-id="2">
+							<td>南门文二西路</td>
+						</tr>
+		            </table>
+			</div>
+		</div>
+	
+		<script>
+		
+			function selectTable(options){
+				
+			}
+			$("#inp").mouseenter(function(){
+				$(".box").removeClass("hide-show")
+			})
+			$(".big-box").mouseleave(function(){
+				$(".box").addClass("hide-show")
+			})
+			$("#theTable").treetable({
+			expandable: true,
+			clickableNodeNames: true,
+			stringCollapse: "收起",  
+            stringExpand: "展开",
+            initialState:"expanded",
+			indenterTemplate: '<span class="expand"></span>',
+			expanderTemplate: '<a class="icon-mark icon-mark-expand" href="#">&nbsp;</a>',
+		}, true);
+		
+		$("#theTable").on("click","td",function(){
+			if($(this).find(".icon-mark").length){
+				$(this).find(".icon-mark").toggleClass("icon-mark-expand").toggleClass("icon-mark-close")
+			}	
+			$("#inp").val($(this).text())
+		})
+		$("#theTable").on("mouseenter","tr",function(){
+			$(this).addClass("select-color").siblings().removeClass("select-color")
+		})
+		
+		</script>
+	</body>
+</html>
